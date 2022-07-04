@@ -19,7 +19,8 @@ jobs:
       - checkout
       - run:
           name: "Print hello"
-          command: echo "Hello" $MY_ENV_VAR
+          command: |
+            echo $MY_ENV_VAR
   
   print-world:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
