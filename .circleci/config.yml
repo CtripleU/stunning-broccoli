@@ -36,7 +36,7 @@ jobs:
 workflows:
   print-workflow:
     jobs:
-      - print_hello 
-      - print_world:
+      - print-hello 
+      - print-world:
           requires:
             - print-hello-workflow
