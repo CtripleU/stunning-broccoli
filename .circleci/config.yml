@@ -35,9 +35,9 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  print-workflow:
+  test-env-vars:
     jobs:
       - print-hello 
-      - print-world:
-          requires:
-            - print-hello
+      # - print-world:
+      #     requires:
+      #       - print-hello
