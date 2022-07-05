@@ -4,7 +4,7 @@ version: 2.1
 
 commands: 
   print_pipeline_id:
-  description: "Prints Circle CI workflow ID"
+    description: "Prints Circle CI workflow ID"
     parameters:
       id:
         type: string
