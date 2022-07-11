@@ -10,6 +10,7 @@ commands:
           name: Destroy environment
           command: |
             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+          when: on_fail
 jobs:
   create_infrastructure: 
       docker:
@@ -23,6 +24,8 @@ jobs:
                 --template-file template.yml \
                 --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-1
+        - run: return 1
+        - destroy_environment
         
   # configure_infrastructure:
   #     docker:
@@ -40,16 +43,17 @@ jobs:
   #           command: |
   #             ansible-playbook -i inventory main.yml
 
-  smoke_test:
-      docker:
-        - image: amazon/aws-cli
-      steps:
-        - checkout
-        - run:
-            name: simulate error
-            command: |
-              return 1   # cause job to fail
-        - destroy_environment
+  # smoke_test:
+  #     docker:
+  #       - image: amazon/aws-cli
+  #     steps:
+  #       - checkout
+  #       - run:
+  #           name: simulate error
+  #           command: |
+  #             return 1   # cause job to fail
+  #       - destroy_environment
+  #         when: on_fail
 # Sequential workflow
 workflows:
   # Name the workflow
@@ -57,8 +61,8 @@ workflows:
     jobs:
       - create_infrastructure
       # - configure_infrastructure
-      - smoke_test:
-          requires:
-            - create_infrastructure
+      # - smoke_test:
+      #     requires:
+      #       - create_infrastructure
 
       
