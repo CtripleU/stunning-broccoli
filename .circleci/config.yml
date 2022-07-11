@@ -23,10 +23,7 @@ jobs:
               aws cloudformation deploy \
                 --template-file template.yml \
                 --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-                --region us-east-1
-        - run: return 1
-        - destroy_environment
-        
+                --region us-east-1        
   # configure_infrastructure:
   #     docker:
   #       - image: python:3.7-alpine3.11
@@ -43,17 +40,16 @@ jobs:
   #           command: |
   #             ansible-playbook -i inventory main.yml
 
-  # smoke_test:
-  #     docker:
-  #       - image: amazon/aws-cli
-  #     steps:
-  #       - checkout
-  #       - run:
-  #           name: simulate error
-  #           command: |
-  #             return 1   # cause job to fail
-  #       - destroy_environment
-  #         when: on_fail
+  smoke_test:
+      docker:
+        - image: amazon/aws-cli
+      steps:
+        - checkout
+        - run:
+            name: simulate error
+            command: |
+              return 1   # cause job to fail
+        - destroy_environment
 # Sequential workflow
 workflows:
   # Name the workflow
@@ -61,8 +57,8 @@ workflows:
     jobs:
       - create_infrastructure
       # - configure_infrastructure
-      # - smoke_test:
-      #     requires:
-      #       - create_infrastructure
+      - smoke_test:
+          requires:
+            - create_infrastructure
 
       
