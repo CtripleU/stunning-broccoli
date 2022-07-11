@@ -22,3 +22,5 @@ workflows:
   my_workflow:
     jobs:
       - create_infrastructure
+
+      # new comment to trigger pipeline
