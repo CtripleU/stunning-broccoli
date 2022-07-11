@@ -49,8 +49,8 @@ jobs:
             name: simulate error
             command: |
               return 1   # cause job to fail
-        - destroy_environment
-          when: on_fail
+        - destroy_environment:
+            when: on_fail
 # Sequential workflow
 workflows:
   # Name the workflow
