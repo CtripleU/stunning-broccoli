@@ -1,6 +1,6 @@
 Parameters:
   # New Bucket name
-  MyBucketName: myudacitybucket9099113
+  MyBucketName: 
     Description: Existing Bucket name
     Type: String
 
